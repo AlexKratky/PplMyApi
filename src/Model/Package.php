@@ -62,6 +62,8 @@ class Package implements IPackage
     /** @var IAddressForService[] */
     private $addressesForServices;
 
+    private $verifyDepoCode = false;
+
     /**
      * Package constructor.
      * @param string $packageNumber Package number (40990019352)
@@ -98,7 +100,8 @@ class Package implements IPackage
         IPalletInfo $palletInfo = null,
         IWeightedPackageInfo $weightedPackageInfo = null,
         IPackageSet $packageSet = null,
-        array $addressesForServices = []
+        array $addressesForServices = [],
+        bool $verifyDepoCode = true
     ) {
         if (in_array($packageProductType, Product::$cashOnDelivery) && is_null($paymentInfo)) {
             throw new WrongDataException('$paymentInfo must be set if product type is CoD');
@@ -128,6 +131,7 @@ class Package implements IPackage
         $this->setWeightedPackageInfo($weightedPackageInfo);
         $this->setPackageSet($packageSet);
         $this->setAddressesForServices($addressesForServices);
+        $this->verifyDepoCode = $verifyDepoCode;
 
         if (in_array($flags, Product::$deliverySaturday) && is_null($palletInfo)) {
             throw new WrongDataException('Package requires Salamek\PplMyApi\Enum\Flag::SATURDAY_DELIVERY to be true or false');
@@ -171,7 +175,7 @@ class Package implements IPackage
      */
     public function setDepoCode($depoCode)
     {
-        if ($depoCode !== null && ! in_array($depoCode, Depo::$list)) {
+        if ($this->verifyDepoCode && $depoCode !== null && ! in_array($depoCode, Depo::$list)) {
             throw new WrongDataException(sprintf('$depoCode has wrong value, only %s are allowed', implode(', ', Depo::$list)));
         }
         $this->depoCode = $depoCode;
