@@ -23,7 +23,7 @@ class PaymentInfo implements IPaymentInfo
     /** @var null|float */
     private $cashOnDeliveryPrice = null;
 
-    /** @var null|integer */
+    /** @var null|integer|string */
     private $cashOnDeliveryVariableSymbol = null;
 
     /** @var null|string */
@@ -45,7 +45,7 @@ class PaymentInfo implements IPaymentInfo
      * PaymentInfo constructor.
      * @param float $cashOnDeliveryPrice
      * @param string $cashOnDeliveryCurrency
-     * @param int $cashOnDeliveryVariableSymbol
+     * @param int|string|null $cashOnDeliveryVariableSymbol
      * @param null|string $insuranceCurrency
      * @param float|null $insurancePrice
      * @param null|string $bankAccount
@@ -57,7 +57,7 @@ class PaymentInfo implements IPaymentInfo
     public function __construct(
         float $cashOnDeliveryPrice,
         string $cashOnDeliveryCurrency,
-        int $cashOnDeliveryVariableSymbol,
+        $cashOnDeliveryVariableSymbol,
         string $insuranceCurrency = null,
         float $insurancePrice = null,
         string $bankAccount = null,
@@ -118,9 +118,9 @@ class PaymentInfo implements IPaymentInfo
     }
 
     /**
-     * @param int $cashOnDeliveryVariableSymbol
+     * @param int|string|null $cashOnDeliveryVariableSymbol
      */
-    public function setCashOnDeliveryVariableSymbol(int $cashOnDeliveryVariableSymbol): void
+    public function setCashOnDeliveryVariableSymbol($cashOnDeliveryVariableSymbol): void
     {
         $this->cashOnDeliveryVariableSymbol = $cashOnDeliveryVariableSymbol;
     }
@@ -202,9 +202,9 @@ class PaymentInfo implements IPaymentInfo
     }
 
     /**
-     * @return int
+     * @return int|string|null
      */
-    public function getCashOnDeliveryVariableSymbol(): int
+    public function getCashOnDeliveryVariableSymbol()
     {
         return $this->cashOnDeliveryVariableSymbol;
     }

@@ -37,9 +37,9 @@ interface IPaymentInfo
     public function setCashOnDeliveryPrice(float $cashOnDeliveryPrice): void;
 
     /**
-     * @param int $cashOnDeliveryVariableSymbol
+     * @param int|string|null $cashOnDeliveryVariableSymbol
      */
-    public function setCashOnDeliveryVariableSymbol(int $cashOnDeliveryVariableSymbol): void;
+    public function setCashOnDeliveryVariableSymbol($cashOnDeliveryVariableSymbol): void;
 
     /**
      * @param null|string $iban
@@ -88,9 +88,9 @@ interface IPaymentInfo
     public function getCashOnDeliveryPrice(): float;
 
     /**
-     * @return int
+     * @return int|string|null
      */
-    public function getCashOnDeliveryVariableSymbol(): int;
+    public function getCashOnDeliveryVariableSymbol();
 
     /**
      * @return null|string
